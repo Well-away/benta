@@ -5,7 +5,6 @@ if(!isset($_SESSION["username"]) || $_SESSION["role"] != "client") {
     exit();
 }
 
-// Trap missing ID
 if(!isset($_GET["id"])) {
     echo "<script>window.location = 'transactions.php'; </script>";
     exit();
@@ -15,7 +14,6 @@ $con = mysqli_connect("localhost", "root", "", "dbbenta");
 $id = $_GET["id"];
 $username = $_SESSION["username"];
 
-// Fetch Parent Transaction (And ensure it belongs to the logged-in user for security)
 $q_trans = mysqli_query($con, "select * from transactions where id=$id and username='$username'");
 if(mysqli_num_rows($q_trans) == 0) {
     echo "<script>window.location = 'transactions.php'; </script>";
@@ -23,7 +21,6 @@ if(mysqli_num_rows($q_trans) == 0) {
 }
 $trans = mysqli_fetch_array($q_trans);
 
-// Process Cancellation
 if(isset($_POST["btncancel"])) {
     mysqli_query($con, "update transactions set status='Cancelled' where id=$id");
     echo "<script>alert('Your transaction has been cancelled.'); window.location='transactions.php'; </script>";

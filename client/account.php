@@ -7,11 +7,10 @@ if(!isset($_SESSION["username"]) || $_SESSION["role"] != "client") {
 $con = mysqli_connect("localhost", "root", "", "dbbenta");
 $username = $_SESSION["username"];
 
-// Fetch Current User Details
 $q = mysqli_query($con, "select * from users where username='$username'");
 $user = mysqli_fetch_array($q);
 
-// Update Logic
+
 if(isset($_POST["btnupdate"])) {
     $contact = $_POST["contact"];
     $address = $_POST["address"];

@@ -2,7 +2,6 @@
 session_start();
 $con = mysqli_connect("localhost", "root", "", "dbbenta");
 
-// Following the exact structure from PHP - SESSION page 2
 if(!isset($_SESSION["username"])) {
 ?>
 <!DOCTYPE html>
@@ -37,30 +36,26 @@ if(!isset($_SESSION["username"])) {
                     $username = $_POST["username"];
                     $password = $_POST["password"];
 
-                    // Select query and row counting based on SESSION module
                     $q = mysqli_query($con, "select * from users where username='$username' and password='$password'");
                     $count = mysqli_num_rows($q);
 
-                    // Add this trap to catch the specific SQL error
                     if (!$q) {
                         die("<div class='alert alert-danger mt-3'><strong>Database Error:</strong> " . mysqli_error($con) . "</div>");
                     }
 
 
                     if($count > 0){
-                        $r = mysqli_fetch_array($q); // Fetch the array to get the role
+                        $r = mysqli_fetch_array($q);
                         
                         $_SESSION["username"] = $r["username"];
                         $_SESSION["role"] = $r["role"];
 
-                        // Redirect based on role using relative paths for your folder structure
                         if($r["role"] == "admin"){
                             echo "<script>window.location = '../admin/admin_dashboard.php'; </script>";
                         } else {
                             echo "<script>window.location = 'index.php'; </script>"; 
                         }
                     } else {
-                        // Using Bootstrap text-danger class for errors
                         echo "<p class='text-danger mt-2'>Invalid username or password.</p>"; 
                     }
                 }
@@ -72,7 +67,6 @@ if(!isset($_SESSION["username"])) {
 </html>
 <?php
 } else {
-    // If session exists, route them to their proper dashboard
     if($_SESSION["role"] == "admin"){
         echo "<script>window.location = '../admin/admin_dashboard.php'; </script>";
     } else {

@@ -5,7 +5,6 @@ if(!isset($_SESSION["username"]) || $_SESSION["role"] != "client") {
     exit();
 }
 
-// Trap missing ID
 if(!isset($_GET["id"])) {
     echo "<script>window.location = 'index.php'; </script>";
     exit();
@@ -68,7 +67,6 @@ $item = mysqli_fetch_array($q);
                             $username = $_SESSION["username"];
                             $order_qty = $_POST["order_qty"];
                             
-                            // Insert into the cart table
                             mysqli_query($con, "insert into cart (username, item_id, quantity) values('$username', $id, $order_qty)");
                             
                             echo "<script>alert('Item successfully added to your cart!'); window.location='index.php'; </script>";

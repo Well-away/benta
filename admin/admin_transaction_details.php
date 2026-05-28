@@ -16,7 +16,6 @@ $id = $_GET["id"];
 $q_trans = mysqli_query($con, "select * from transactions where id=$id");
 $trans = mysqli_fetch_array($q_trans);
 
-// Process Status Updates
 if(isset($_POST["btnapprove"])) {
     mysqli_query($con, "update transactions set status='Approved' where id=$id");
     echo "<script>alert('Transaction Approved!'); window.location='admin_transaction_details.php?id=$id'; </script>";

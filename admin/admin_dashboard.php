@@ -6,11 +6,9 @@ if(!isset($_SESSION["username"]) || $_SESSION["role"] != "admin") {
 }
 $con = mysqli_connect("localhost", "root", "", "dbbenta");
 
-// Fetch the number of Pending Transactions
 $q_pending = mysqli_query($con, "select * from transactions where status='Pending'");
 $pending_count = mysqli_num_rows($q_pending);
 
-// Fetch the number of Approved Transactions
 $q_approved = mysqli_query($con, "select * from transactions where status='Approved'");
 $approved_count = mysqli_num_rows($q_approved);
 ?>

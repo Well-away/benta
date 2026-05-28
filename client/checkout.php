@@ -7,11 +7,9 @@ if(!isset($_SESSION["username"]) || $_SESSION["role"] != "client") {
 $con = mysqli_connect("localhost", "root", "", "dbbenta");
 $username = $_SESSION["username"];
 
-// Fetch User Delivery Details
 $q_user = mysqli_query($con, "select * from users where username='$username'");
 $user = mysqli_fetch_array($q_user);
 
-// Calculate Totals Before Display
 $q_cart = mysqli_query($con, "select * from cart where username='$username'");
 if(mysqli_num_rows($q_cart) == 0) {
     echo "<script>window.location = 'index.php'; </script>";
@@ -29,22 +27,18 @@ while($c = mysqli_fetch_array($q_cart)) {
 $shipping_fee = 100;
 $total_amount = $subtotal + $shipping_fee;
 
-// Process Checkout Submission
 if(isset($_POST["btnproceed"])) {
     $client_name = $user["fullname"];
     $contact = $user["contact"];
     $delivery_address = $user["address"];
     $order_date = date("Y-m-d h:i A"); 
     
-    // 1. Insert Parent Transaction
     mysqli_query($con, "insert into transactions (username, client_name, contact_detail, delivery_address, total_amount, order_date, status) values('$username', '$client_name', '$contact', '$delivery_address', $total_amount, '$order_date', 'Pending')");
     
-    // Get the ID of the transaction we just inserted (using LIMIT 1 sorted descending)
     $q_trans = mysqli_query($con, "select * from transactions where username='$username' order by id desc limit 1");
     $trans = mysqli_fetch_array($q_trans);
     $trans_id = $trans["id"];
     
-    // 2. Loop Cart again to insert details and update items
     $q_cart_items = mysqli_query($con, "select * from cart where username='$username'");
     while($ci = mysqli_fetch_array($q_cart_items)) {
         $ci_item_id = $ci["item_id"];
@@ -57,15 +51,12 @@ if(isset($_POST["btnproceed"])) {
         $item_price = $i_details["price"];
         $item_subtotal = $item_price * $ci_qty;
         
-        // Insert to transaction_details
         mysqli_query($con, "insert into transaction_details (transaction_id, item_name, item_price, item_quantity, subtotal) values($trans_id, '$item_name', $item_price, $ci_qty, $item_subtotal)");
         
-        // 3. Update remaining item stock
         $new_stock = $i_details["quantity"] - $ci_qty;
         mysqli_query($con, "update items set quantity=$new_stock where id=$ci_item_id");
     }
     
-    // 4. Clear the user's cart
     mysqli_query($con, "delete from cart where username='$username'");
     
     echo "<script>alert('Order Placed Successfully! Your items are pending approval.'); window.location='transactions.php'; </script>";

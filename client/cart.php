@@ -7,7 +7,6 @@ if(!isset($_SESSION["username"]) || $_SESSION["role"] != "client") {
 $con = mysqli_connect("localhost", "root", "", "dbbenta");
 $username = $_SESSION["username"];
 
-// Action to Remove Item from Cart
 if(isset($_GET["remove_id"])){
     $remove_id = $_GET["remove_id"];
     mysqli_query($con, "delete from cart where id = $remove_id");

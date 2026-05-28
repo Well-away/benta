@@ -7,7 +7,6 @@ if(!isset($_SESSION["username"]) || $_SESSION["role"] != "admin") {
 
 $con = mysqli_connect("localhost", "root", "", "dbbenta");
 
-// NEW TRAP: Check if ID exists in the URL
 if(!isset($_GET["id"])) {
     echo "<script>window.location = 'admin_items.php'; </script>";
     exit();

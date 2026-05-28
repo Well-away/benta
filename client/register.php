@@ -49,7 +49,6 @@ $con = mysqli_connect("localhost", "root", "", "dbbenta");
                     $username = $_POST["username"];
                     $password = $_POST["password"];
 
-                    // Based on the PHP CRUD module's insert query syntax
                     mysqli_query($con, "insert into users (fullname, contact, address, username, password, role) values('$fullname', '$contact', '$address', '$username', '$password', 'client')");
                     
                     echo "<script>window.location = 'login.php'; </script>";
