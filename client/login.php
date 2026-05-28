@@ -41,6 +41,12 @@ if(!isset($_SESSION["username"])) {
                     $q = mysqli_query($con, "select * from users where username='$username' and password='$password'");
                     $count = mysqli_num_rows($q);
 
+                    // Add this trap to catch the specific SQL error
+                    if (!$q) {
+                        die("<div class='alert alert-danger mt-3'><strong>Database Error:</strong> " . mysqli_error($con) . "</div>");
+                    }
+
+
                     if($count > 0){
                         $r = mysqli_fetch_array($q); // Fetch the array to get the role
                         
