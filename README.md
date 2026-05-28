@@ -6,7 +6,6 @@ Step 2: Click on SQL found in the upper left side of the screen
 
 Step 3: click raw here in github before you Copy and Paste this code:
 
--- 1. Create the database
 -- Create the database
 CREATE DATABASE IF NOT EXISTS dbbenta;
 USE dbbenta;
@@ -22,6 +21,10 @@ CREATE TABLE IF NOT EXISTS `users` (
   `role` text,
   PRIMARY KEY (`id`)
 );
+
+-- Insert the admin account
+INSERT INTO `users` (`username`, `password`, `fullname`, `contact`, `address`, `role`) 
+VALUES ('admin', 'admin', 'Administrator', 'N/A', 'N/A', 'admin');
 
 -- Create the 'categories' table
 CREATE TABLE IF NOT EXISTS `categories` (
