@@ -33,6 +33,7 @@ if(isset($_POST["btncancel"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Details #<?php echo $id; ?> - BENTA.PH</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../style.css" rel="stylesheet">
 </head>
 <body class="bg-light">
     <div class="bg-primary text-white p-3 mb-4">
