@@ -4,7 +4,7 @@ Step 1: Go to phpmyadmin
 
 Step 2: Click on SQL found in the upper left side of the screen
 
-Step 3: Copy and Paste this code:
+Step 3: click raw here in github before you Copy and Paste this code:
 
 -- 1. Create the database
 -- Create the database
